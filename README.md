@@ -95,5 +95,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 For any questions or inquiries, please contact [your-email@example.com](mailto:osamaalnuimi@gmail.com).
 ```
-
-You can copy and save this content to a file named `README.md` on your local machine.
