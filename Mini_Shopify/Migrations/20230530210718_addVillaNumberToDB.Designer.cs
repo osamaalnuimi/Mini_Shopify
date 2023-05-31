@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mini_Shopify.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230521183848_CreateVillaTable")]
-    partial class CreateVillaTable
+    [Migration("20230530210718_addVillaNumberToDB")]
+    partial class addVillaNumberToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace Mini_Shopify.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Mini_Shopify.Models.Villa", b =>
+            modelBuilder.Entity("Mini_Shopify.Entities.Models.Villa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,8 @@ namespace Mini_Shopify.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
 
                     b.Property<int>("Occupancy")
                         .HasColumnType("integer");
@@ -65,14 +66,14 @@ namespace Mini_Shopify.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Villas", (string)null);
+                    b.ToTable("Villas");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 5, 21, 18, 38, 48, 755, DateTimeKind.Utc).AddTicks(8051),
+                            CreatedDate = new DateTime(2023, 5, 30, 21, 7, 18, 695, DateTimeKind.Utc).AddTicks(8933),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa",
@@ -85,7 +86,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 5, 21, 18, 38, 48, 755, DateTimeKind.Utc).AddTicks(8053),
+                            CreatedDate = new DateTime(2023, 5, 30, 21, 7, 18, 695, DateTimeKind.Utc).AddTicks(8936),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 2",
@@ -98,7 +99,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 5, 21, 18, 38, 48, 755, DateTimeKind.Utc).AddTicks(8054),
+                            CreatedDate = new DateTime(2023, 5, 30, 21, 7, 18, 695, DateTimeKind.Utc).AddTicks(8937),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 3",
@@ -111,7 +112,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 5, 21, 18, 38, 48, 755, DateTimeKind.Utc).AddTicks(8056),
+                            CreatedDate = new DateTime(2023, 5, 30, 21, 7, 18, 695, DateTimeKind.Utc).AddTicks(8938),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 4",
@@ -124,7 +125,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 5, 21, 18, 38, 48, 755, DateTimeKind.Utc).AddTicks(8057),
+                            CreatedDate = new DateTime(2023, 5, 30, 21, 7, 18, 695, DateTimeKind.Utc).AddTicks(8939),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 5",
@@ -133,6 +134,27 @@ namespace Mini_Shopify.Migrations
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             sqft = 550
                         });
+                });
+
+            modelBuilder.Entity("Mini_Shopify.Entities.Models.VillaNumber", b =>
+                {
+                    b.Property<int>("VillaNo")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("SpecialDetails")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("VillaNo");
+
+                    b.ToTable("VillasNumber");
                 });
 #pragma warning restore 612, 618
         }

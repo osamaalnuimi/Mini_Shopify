@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mini_Shopify.Data;
-using Mini_Shopify.Models;
-using Mini_Shopify.Models.Dto;
+using Mini_Shopify.Entities.Data;
+using Mini_Shopify.Entities.Models;
+using Mini_Shopify.Entities.Models.Dto;
+using Mini_Shopify.Entities.Repository.IRepository;
 
 namespace Mini_Shopify.Controllers
 {
@@ -12,20 +13,22 @@ namespace Mini_Shopify.Controllers
     public class VillaApiController : ControllerBase
     {
         private readonly ILogger<VillaApiController> _logger;
-        private readonly ApplicationDbContext _context;
-        public VillaApiController(ILogger<VillaApiController> logger,ApplicationDbContext dbContext)
+        private readonly IRepositoryWrapper _repository;
+       
+        public VillaApiController(ILogger<VillaApiController> logger, IRepositoryWrapper repository)
         {
-            _context = dbContext;
+            _repository = repository;
             _logger = logger;
         }
 
         [HttpGet(Name = "GetVillas")]
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VillaDTO[]))]
-        public async Task<ActionResult<IEnumerable<VillaDTO>>> GetVillas() {
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(APIResponse<IEnumerable<VillaDTO>>))]
+        public ActionResult<APIResponse<IEnumerable<VillaDTO>>> GetVillas() {
             _logger.LogInformation("Getting all Villas");
-
-            return Ok(await _context.Villas.ToListAsync()) ;
+           
+            var villasDto =  _repository.Villa.GetAll().Select(v=> new VillaDTO { Id = v.Id,Name=v.Name,Amenity=v.Amenity,Details=v.Details,ImageUrl=v.ImageUrl,Occupancy=v.Occupancy,Rate=v.Rate,Sqft=v.sqft }).ToList();
+            return Ok(new APIResponse<IEnumerable<VillaDTO>> { Data = villasDto, StatusCode = StatusCodes.Status200OK }) ;
         
         }
         [HttpGet("{id:int}",Name ="GetVilla")]
@@ -34,19 +37,19 @@ namespace Mini_Shopify.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<VillaDTO>> GetVilla(int id)
+        public ActionResult<APIResponse<VillaDTO>> GetVilla(int id)
         {
             if (id == 0)
             {
                 _logger.LogError("Get Villa Error with  Id " + id);
                 return BadRequest();
             }
-            var villa =  await (_context.Villas.FirstOrDefaultAsync(u => u.Id == id));
+            var villa =   _repository.Villa.GetByCondition(u=> u.Id == id).Select(v=> new VillaDTO { Id = v.Id, Name = v.Name, Amenity = v.Amenity, Details = v.Details, ImageUrl = v.ImageUrl, Occupancy = v.Occupancy, Rate = v.Rate, Sqft = v.sqft }).First();
             if (villa == null)
             {
                 return NotFound();
             }
-            return Ok(villa);
+            return Ok(new APIResponse<VillaDTO> { Data = villa,StatusCode=StatusCodes.Status200OK });
         }
 
         [HttpPost]
@@ -54,7 +57,7 @@ namespace Mini_Shopify.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task< ActionResult<VillaDTO>>CreateVilla([FromBody]VillaCreateDTO villa) {
-            if (await _context.Villas.FirstOrDefaultAsync(v=> v.Name.ToLower() == villa.Name.ToLower()) != null) {
+            if ( _repository.Villa.GetByCondition(v=> v.Name.ToLower() == villa.Name.ToLower()).Any()) {
                 ModelState.AddModelError("CustomError", "Villa is already exist");
                 return BadRequest(ModelState);
             }
@@ -71,8 +74,8 @@ namespace Mini_Shopify.Controllers
                 Rate=villa.Rate,
                 sqft=villa.Sqft
             };
-            await _context.Villas.AddAsync(model);
-            await _context.SaveChangesAsync();
+            _repository.Villa.Create(model);
+            _repository.Save();
 
             return CreatedAtRoute("GetVilla",new {id= model.Id},villa);
         }
@@ -90,10 +93,10 @@ namespace Mini_Shopify.Controllers
             {
                 return BadRequest();
             }
-            var villa = await _context.Villas.FirstOrDefaultAsync(u => u.Id == id);
+            var villa = await _repository.Villa.GetByCondition(u => u.Id == id).FirstOrDefaultAsync();
             if (villa == null) { return NotFound(); }
-            _context.Villas.Remove(villa);
-            await _context.SaveChangesAsync();
+            _repository.Villa.Delete(villa);
+             _repository.Save();
             return NoContent();
         }
 
@@ -119,8 +122,8 @@ namespace Mini_Shopify.Controllers
                 Rate = villaDto.Rate,
                 sqft = villaDto.Sqft
             };
-            _context.Villas.Update(model);
-            _context.SaveChanges();
+            _repository.Villa.Update(model);
+            _repository.Save();
             return NoContent();
         }
 
@@ -137,7 +140,7 @@ namespace Mini_Shopify.Controllers
             {
                 return BadRequest();
             }
-            var villa =await _context.Villas.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+            var villa =(Villa)_repository.Villa.GetByCondition(u => u.Id == id);
 
             VillaUpdateDTO villaDto = new() { 
                 Amenity=villa.Amenity,
@@ -162,8 +165,8 @@ namespace Mini_Shopify.Controllers
                 Rate = villaDto.Rate,
                 sqft = villaDto.Sqft
             };
-            _context.Update(model);
-            await _context.SaveChangesAsync();
+            _repository.Villa.Update(model);
+            _repository.Save();
 
             if (!ModelState.IsValid)
             {

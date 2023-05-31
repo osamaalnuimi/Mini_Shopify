@@ -1,32 +1,33 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mini_Shopify.Models;
+using Mini_Shopify.Entities.Models;
 
-namespace Mini_Shopify.Data
+namespace Mini_Shopify.Entities.Data
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<Villa> Villas { get; set; }
+        public DbSet<VillaNumber> VillaNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Villa>().HasData(
                 new Villa()
-            {
-                Id = 1,
-                Name = "Royal Villa",
-                Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                ImageUrl ="",
-                Occupancy = 5,
-                Rate= 200,
-                sqft = 550,
-                Amenity ="",
-                CreatedDate = DateTime.UtcNow,
+                {
+                    Id = 1,
+                    Name = "Royal Villa",
+                    Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    ImageUrl = "",
+                    Occupancy = 5,
+                    Rate = 200,
+                    sqft = 550,
+                    Amenity = "",
+                    CreatedDate = DateTime.UtcNow,
 
-            },
+                },
 
                 new Villa()
                 {
@@ -34,7 +35,7 @@ namespace Mini_Shopify.Data
                     Name = "Royal Villa 2",
                     Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     ImageUrl = "",
-                    Occupancy = 4 ,
+                    Occupancy = 4,
                     Rate = 200,
                     sqft = 550,
                     Amenity = "",
@@ -43,7 +44,7 @@ namespace Mini_Shopify.Data
                 },
                   new Villa()
                   {
-                      Id =3,
+                      Id = 3,
                       Name = "Royal Villa 3",
                       Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                       ImageUrl = "",
@@ -60,7 +61,7 @@ namespace Mini_Shopify.Data
                         Name = "Royal Villa 4",
                         Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                         ImageUrl = "",
-                        Occupancy =5,
+                        Occupancy = 5,
                         Rate = 200,
                         sqft = 550,
                         Amenity = "",

@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mini_Shopify.Models.Dto
+namespace Mini_Shopify.Entities.Models.Dto
 {
-    public class VillaCreateDTO
+    public class VillaDTO
     {
-        
-      
+
+        public int Id { get; set; }
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
         public string Details { get; set; }
         [Required]
-        public Double Rate { get; set; }
+        public double Rate { get; set; }
 
         public int Occupancy { get; set; }
         public int Sqft { get; set; }

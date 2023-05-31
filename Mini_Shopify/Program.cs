@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Mini_Shopify.Data;
+using Mini_Shopify;
+using Mini_Shopify.Entities.Data;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 // Add services to the container.
 Log.Logger = (Serilog.ILogger)new LoggerConfiguration().MinimumLevel.Debug()
     .WriteTo.File("log/villaLogs.txt",rollingInterval:RollingInterval.Day).CreateBootstrapLogger();
-
+builder.Services.ConfigureRepositoryWrapper();
 builder.Host.UseSerilog(); 
 builder.Services.AddControllers(option =>
 {
