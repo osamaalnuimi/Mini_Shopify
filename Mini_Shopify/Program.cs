@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Mini_Shopify;
 using Mini_Shopify.Entities.Data;
+using Mini_Shopify.Entities.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +26,6 @@ builder.Services.AddControllers(option =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

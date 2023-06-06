@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mini_Shopify.Entities.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mini_Shopify.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230604085232_CreateLocalUserTable")]
+    partial class CreateLocalUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,8 @@ namespace Mini_Shopify.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Name")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -104,7 +105,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 6, 4, 15, 33, 37, 840, DateTimeKind.Utc).AddTicks(2739),
+                            CreatedDate = new DateTime(2023, 6, 4, 8, 52, 32, 257, DateTimeKind.Utc).AddTicks(7764),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa",
@@ -117,7 +118,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 6, 4, 15, 33, 37, 840, DateTimeKind.Utc).AddTicks(2741),
+                            CreatedDate = new DateTime(2023, 6, 4, 8, 52, 32, 257, DateTimeKind.Utc).AddTicks(7767),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 2",
@@ -130,7 +131,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 6, 4, 15, 33, 37, 840, DateTimeKind.Utc).AddTicks(2743),
+                            CreatedDate = new DateTime(2023, 6, 4, 8, 52, 32, 257, DateTimeKind.Utc).AddTicks(7768),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 3",
@@ -143,7 +144,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 6, 4, 15, 33, 37, 840, DateTimeKind.Utc).AddTicks(2743),
+                            CreatedDate = new DateTime(2023, 6, 4, 8, 52, 32, 257, DateTimeKind.Utc).AddTicks(7769),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 4",
@@ -156,7 +157,7 @@ namespace Mini_Shopify.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 6, 4, 15, 33, 37, 840, DateTimeKind.Utc).AddTicks(2744),
+                            CreatedDate = new DateTime(2023, 6, 4, 8, 52, 32, 257, DateTimeKind.Utc).AddTicks(7770),
                             Details = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "",
                             Name = "Royal Villa 5",

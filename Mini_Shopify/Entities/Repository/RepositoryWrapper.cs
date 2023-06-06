@@ -1,4 +1,5 @@
 ﻿using Mini_Shopify.Entities.Data;
+using Mini_Shopify.Entities.Models;
 using Mini_Shopify.Entities.Repository.IRepository;
 
 namespace Mini_Shopify.Entities.Repository
@@ -8,6 +9,8 @@ namespace Mini_Shopify.Entities.Repository
         private ApplicationDbContext _dbContext;
         private IVillaRepository _villaRepository;
         private IVillaNumberRepository _villaNumberRepository;
+        private IUserRepository _userRepository;
+
         public IVillaRepository Villa
         {
             get
@@ -17,6 +20,17 @@ namespace Mini_Shopify.Entities.Repository
                     _villaRepository = new VillaRepository(_dbContext);
                 }
                 return _villaRepository;
+            }
+        }
+        public IUserRepository User
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new UserRepository(_dbContext);
+                }
+                return _userRepository;
             }
         }
         public IVillaNumberRepository VillaNumber
