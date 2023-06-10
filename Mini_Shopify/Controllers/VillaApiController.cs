@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mini_Shopify.Entities.Data;
@@ -22,7 +23,7 @@ namespace Mini_Shopify.Controllers
         }
 
         [HttpGet(Name = "GetVillas")]
-
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(APIResponse<IEnumerable<VillaDTO>>))]
         public ActionResult<APIResponse<IEnumerable<VillaDTO>>> GetVillas() {
             _logger.LogInformation("Getting all Villas");
@@ -31,6 +32,8 @@ namespace Mini_Shopify.Controllers
             return Ok(new APIResponse<IEnumerable<VillaDTO>> { Data = villasDto, StatusCode = StatusCodes.Status200OK }) ;
         
         }
+
+        [Authorize(Roles ="admin")]
         [HttpGet("{id:int}",Name ="GetVilla")]
         [ProducesResponseType(StatusCodes.Status200OK,Type =typeof(VillaDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -53,6 +56,7 @@ namespace Mini_Shopify.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="admin")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VillaDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,7 +85,7 @@ namespace Mini_Shopify.Controllers
         }
 
 
-
+        [Authorize(Roles ="Custom")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
